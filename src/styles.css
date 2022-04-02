@@ -1,13 +1,14 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
+.marks .land {
+  fill: #137b80;
 }
-
-span {
-  margin: 20px;
+.marks .sphere {
+  fill: #ececec;
 }
-
-.label {
-  display: inline-block;
-  width: 120px;
+.marks .interiors {
+  fill: none;
+  stroke: #43a4a8;
+}
+.marks .graticules {
+  fill: none;
+  stroke: #dadada;
 }

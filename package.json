@@ -1,21 +1,15 @@
 {
-  "name": "react-d3-pie-chart",
+  "name": "react-d3-sandbox",
   "version": "1.0.0",
-  "description": null,
-  "keywords": [
-    "chart",
-    "d3.js",
-    "react",
-    "pie",
-    "react-spring"
-  ],
+  "description": "",
+  "keywords": [],
   "main": "src/index.js",
   "dependencies": {
     "d3": "5.9.2",
     "react": "16.8.5",
     "react-dom": "16.8.5",
     "react-scripts": "2.1.8",
-    "react-spring": "8.0.18"
+    "topojson": "3.0.2"
   },
   "devDependencies": {},
   "scripts": {
