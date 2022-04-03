@@ -4,6 +4,7 @@ import './styles.css'
 import { HashRouter, Link, Route, Routes } from 'react-router-dom'
 import { MapWithHistogramBrush } from './components/MapWithHistogramBrush/MapWithHistogramBrush'
 import { VizLayout } from './VizLayout'
+import { HorizontalBarchart } from './components/HorizontalBarchart/HorizontalBarchart'
 
 const App = () => (
   <HashRouter>
@@ -27,7 +28,7 @@ const App = () => (
         path="horizontal-bar-chart"
         element={
           <VizLayout>
-            <div />
+            <HorizontalBarchart />
           </VizLayout>
         }
       />

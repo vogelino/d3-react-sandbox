@@ -1,0 +1,24 @@
+.horizontal-barchart .tick {
+  fill: gray;
+}
+
+.horizontal-barchart .bar {
+  fill: var(--accentColor);
+}
+
+.horizontal-barchart .tick-left {
+  font-weight: bold;
+}
+
+.horizontal-barchart .tick-bottom {
+  font-size: 12px;
+}
+
+.horizontal-barchart .x-axis-line {
+  stroke: gray;
+  opacity: 0.6;
+}
+
+.horizontal-barchart .tick-line {
+  fill: lightgray;
+}
