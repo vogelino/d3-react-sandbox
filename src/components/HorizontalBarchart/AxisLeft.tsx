@@ -1,6 +1,12 @@
 import React from 'react'
 
-export const AxisLeft = ({ data, offset, barGap }) => (
+interface AxisLeftProps {
+  data: { id: number; y: number; height: number }[]
+  offset: number
+  barGap: number
+}
+
+export const AxisLeft = ({ data, offset, barGap }: AxisLeftProps) => (
   <>
     {data.map(({ id, y, height }) => (
       <text

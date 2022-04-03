@@ -54,7 +54,8 @@ export const BubbleMap = ({
   height,
 }: BubbleMapProps) => {
   const landMarksData = useWorldMapLandMarksData()
-  const projection = useProjection({ data: landMarksData?.land, width, height })
+  // @ts-ignore
+  const projection = useProjection({ data: landMarksData && landMarksData.land, width, height })
   const sizeScale = useMemo(() => {
     if (!data) return
     return scaleSqrt()
@@ -62,7 +63,7 @@ export const BubbleMap = ({
       .range([1, maxRadius])
   }, [data])
 
-  if (!filteredData || !sizeScale || !projection?.projection) return null
+  if (!filteredData || !sizeScale || !(projection && projection.projection)) return null
   return (
     <g className="bubble-map">
       <LandMarks projection={projection} data={landMarksData} />

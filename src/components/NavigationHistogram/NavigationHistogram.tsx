@@ -37,8 +37,8 @@ interface DateHistogramProps {
   height: number
   width: number
   setBrushExtent: (extent: Date[] | null) => void
-  xValue: (d: unknown) => Date
-  yValue: (d: unknown) => number
+  xValue: (d: { date: Date }) => Date
+  yValue: (d: { value: number }) => number
   xAxisLabel?: string
   xAxisTickFormat?: (d: Date) => string
   yAxisLabel?: string
@@ -113,6 +113,7 @@ export const NavigationHistogram = ({
     brush(select(brushRef.current))
     brush.on('brush end', function onBrush() {
       const selection = brushSelection(this)
+      // @ts-ignore
       setBrushExtent(selection ? selection.map(xScale.invert) : null)
     })
   }, [setBrushExtent, xScale, innerWidth, innerHeight])
@@ -140,7 +141,7 @@ export const NavigationHistogram = ({
         />
         {binnedData && (
           <Marks
-            toolTipFormat={yValue}
+            toolTipFormat={defaultFormatter}
             binnedData={binnedData}
             xScale={xScale}
             yScale={yScale}

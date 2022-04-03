@@ -35,7 +35,7 @@ interface MissingMigrantIncident {
   id: string
   date: Date
   value: number
-  url: string
+  url?: string
   latitude: number
   longitude: number
 }
@@ -49,15 +49,15 @@ export const useMissingMigrantsData = (): MissingMigrantIncident[] | null => {
   const [data, setData] = useState<MissingMigrantIncident[] | null>(null)
 
   useEffect(() => {
-    csv(jsonUrl, (row: MissingMigrantsRawRow) => {
-      const [latitude, longitude] = row.Coordinates.replace('POINT (', '')
+    csv(jsonUrl, (row: Partial<MissingMigrantsRawRow>, idx) => {
+      const [latitude, longitude] = row.Coordinates ? row.Coordinates.replace('POINT (', '')
         .replace(')', '')
         .split(' ')
-        .map((n) => +n)
+        .map((n) => +n) : [0, 0]
       return {
-        id: row['Incident ID'],
-        date: new Date(row['Incident Date']),
-        value: +row['Total Number of Dead and Missing'] || 0,
+        id: row['Incident ID'] || `row-${idx}`,
+        date: new Date(row['Incident Date'] || '2020-01-01'),
+        value: +(row['Total Number of Dead and Missing'] || 0),
         url: row.URL,
         latitude,
         longitude,

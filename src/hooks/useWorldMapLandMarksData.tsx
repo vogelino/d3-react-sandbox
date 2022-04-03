@@ -15,11 +15,12 @@ export const useWorldMapLandMarksData = (): UseDataOutput | null => {
 
   useEffect(() => {
     json<Topology>(jsonUrl).then((topology) => {
-      if (!topology?.objects) return
+      if (!(topology && topology.objects)) return
       const { countries, land } = topology.objects
       if (!countries || !land) return
       setData({
         land: feature(topology, land),
+        // @ts-ignore
         interiors: mesh(topology, countries, (a, b) => a !== b),
       })
     })
