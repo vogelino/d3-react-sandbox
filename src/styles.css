@@ -1,3 +1,9 @@
+:root {
+  --accentColor: #c01850;
+}
+
 body {
   background: #f1f3f5;
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  margin: 0;
 }

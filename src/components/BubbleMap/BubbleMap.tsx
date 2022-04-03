@@ -1,18 +1,23 @@
 import React, { useMemo } from 'react'
 import { LandMarks } from './LandMarks'
-import { useMissingMigrantsData } from '../../hooks/useMissingMigrantsData'
 import { useProjection } from '../../hooks/useProjection'
 import { useWorldMapLandMarksData } from '../../hooks/useWorldMapLandMarksData'
 import { scaleSqrt, max } from 'd3'
 import './BubbleMap.css'
 
 interface BubbleMapProps {
-  data: ReturnType<typeof useMissingMigrantsData>
+  data: {
+    id: string
+    value: number
+    date: Date
+    latitude: number
+    longitude: number
+  }[]
   width: number
   height: number
 }
 
-const sizeValue = (d: { deadOrMissingTotal: number }) => d.deadOrMissingTotal
+const sizeValue = (d: { value: number }) => d.value
 const maxRadius = 20
 
 export const BubbleMap = ({ data, width, height }: BubbleMapProps) => {
@@ -29,7 +34,7 @@ export const BubbleMap = ({ data, width, height }: BubbleMapProps) => {
   return (
     <g className="bubble-map">
       <LandMarks projection={projection} data={landMarksData} />
-      {data.map(({ id, deadOrMissingTotal, latitude, longitude }) => {
+      {data.map(({ id, value, latitude, longitude }) => {
         const [x, y] = projection.projection([latitude, longitude]) || []
         return (
           <circle
@@ -37,7 +42,7 @@ export const BubbleMap = ({ data, width, height }: BubbleMapProps) => {
             key={id}
             cx={x}
             cy={y}
-            r={sizeScale(deadOrMissingTotal)}
+            r={sizeScale(value)}
           />
         )
       })}

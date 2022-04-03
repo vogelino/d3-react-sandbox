@@ -31,10 +31,10 @@ interface MissingMigrantsRawRow {
   URL: string
 }
 
-interface MissingMigrantsParsedObject {
+interface MissingMigrantIncident {
   id: string
   date: Date
-  deadOrMissingTotal: number
+  value: number
   url: string
   latitude: number
   longitude: number
@@ -45,10 +45,8 @@ export type UseDataOutput = {
   interiors: ReturnType<typeof mesh>
 }
 
-export const useMissingMigrantsData = ():
-  | MissingMigrantsParsedObject[]
-  | null => {
-  const [data, setData] = useState<MissingMigrantsParsedObject[] | null>(null)
+export const useMissingMigrantsData = (): MissingMigrantIncident[] | null => {
+  const [data, setData] = useState<MissingMigrantIncident[] | null>(null)
 
   useEffect(() => {
     csv(jsonUrl, (row: MissingMigrantsRawRow) => {
@@ -59,13 +57,17 @@ export const useMissingMigrantsData = ():
       return {
         id: row['Incident ID'],
         date: new Date(row['Incident Date']),
-        deadOrMissingTotal: +row['Total Number of Dead and Missing'] || 0,
+        value: +row['Total Number of Dead and Missing'] || 0,
         url: row.URL,
         latitude,
         longitude,
       }
-    }).then((allRows: MissingMigrantsParsedObject[]) => {
-      setData(allRows)
+    }).then((allRows: MissingMigrantIncident[]) => {
+      setData(
+        allRows.filter(
+          (d) => !!d.date && !!d.latitude && !!d.longitude && !!d.id,
+        ),
+      )
     })
   }, [])
 

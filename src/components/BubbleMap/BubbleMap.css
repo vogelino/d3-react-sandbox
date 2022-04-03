@@ -1,5 +1,5 @@
 .landmarks .land {
-  fill: #d8e1e2;
+  fill: #dce3e4;
 }
 .landmarks .sphere {
   fill: #ebf0f1;
@@ -14,6 +14,6 @@
   stroke: #e0e7e9;
 }
 .bubble-map .data-circle {
-  fill: #218bc4;
+  fill: var(--accentColor);
   opacity: 0.1;
 }
