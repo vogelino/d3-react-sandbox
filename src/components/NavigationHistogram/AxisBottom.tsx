@@ -1,5 +1,5 @@
 import { ScaleTime } from 'd3'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 interface AxisBottomProps {
   xScale: ScaleTime<number, number, number>
@@ -13,23 +13,27 @@ export const AxisBottom = ({
   innerHeight,
   tickFormat,
   tickOffset = 3,
-}: AxisBottomProps) => (
-  <>
-    {xScale.ticks().map((tickValue) => (
-      <g
-        className="tick"
-        key={tickValue.toISOString()}
-        transform={`translate(${xScale(tickValue)},0)`}
-      >
-        <line y2={innerHeight} />
-        <text
-          style={{ textAnchor: 'middle' }}
-          y={innerHeight + tickOffset}
-          dy=".71em"
-        >
-          {tickFormat(tickValue)}
-        </text>
-      </g>
-    ))}
-  </>
-)
+}: AxisBottomProps) =>
+  useMemo(
+    () => (
+      <>
+        {xScale.ticks().map((tickValue) => (
+          <g
+            className="tick"
+            key={tickValue.toISOString()}
+            transform={`translate(${xScale(tickValue)},0)`}
+          >
+            <line y2={innerHeight} />
+            <text
+              style={{ textAnchor: 'middle' }}
+              y={innerHeight + tickOffset}
+              dy=".71em"
+            >
+              {tickFormat(tickValue)}
+            </text>
+          </g>
+        ))}
+      </>
+    ),
+    [xScale, innerHeight, tickFormat, tickOffset],
+  )

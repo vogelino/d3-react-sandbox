@@ -13,7 +13,7 @@ export const AxisLeft = ({
   tickOffset = 3,
 }: AxisLeftProps) => (
   <>
-    {yScale.ticks().map((tickValue: number) => (
+    {yScale.ticks(5).map((tickValue: number) => (
       <g
         key={tickValue}
         className="tick"

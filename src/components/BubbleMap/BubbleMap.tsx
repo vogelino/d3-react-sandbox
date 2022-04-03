@@ -5,14 +5,17 @@ import { useWorldMapLandMarksData } from '../../hooks/useWorldMapLandMarksData'
 import { scaleSqrt, max } from 'd3'
 import './BubbleMap.css'
 
+interface DataItem {
+  id: string
+  value: number
+  date: Date
+  latitude: number
+  longitude: number
+}
+
 interface BubbleMapProps {
-  data: {
-    id: string
-    value: number
-    date: Date
-    latitude: number
-    longitude: number
-  }[]
+  data: DataItem[]
+  filteredData: DataItem[]
   width: number
   height: number
 }
@@ -20,7 +23,12 @@ interface BubbleMapProps {
 const sizeValue = (d: { value: number }) => d.value
 const maxRadius = 20
 
-export const BubbleMap = ({ data, width, height }: BubbleMapProps) => {
+export const BubbleMap = ({
+  data,
+  filteredData,
+  width,
+  height,
+}: BubbleMapProps) => {
   const landMarksData = useWorldMapLandMarksData()
   const projection = useProjection({ data: landMarksData?.land, width, height })
   const sizeScale = useMemo(() => {
@@ -30,11 +38,11 @@ export const BubbleMap = ({ data, width, height }: BubbleMapProps) => {
       .range([1, maxRadius])
   }, [data])
 
-  if (!data || !sizeScale || !projection?.projection) return null
+  if (!filteredData || !sizeScale || !projection?.projection) return null
   return (
     <g className="bubble-map">
       <LandMarks projection={projection} data={landMarksData} />
-      {data.map(({ id, value, latitude, longitude }) => {
+      {filteredData.map(({ id, value, latitude, longitude }) => {
         const [x, y] = projection.projection([latitude, longitude]) || []
         return (
           <circle

@@ -36,13 +36,15 @@ interface DateHistogramProps {
   top: number
   height: number
   width: number
-  setBrushExtent: (extent: number[]) => void
+  setBrushExtent: (extent: Date[] | null) => void
   xValue: (d: unknown) => Date
   yValue: (d: unknown) => number
   xAxisLabel?: string
   xAxisTickFormat?: (d: Date) => string
   yAxisLabel?: string
 }
+
+const defaultFormatter = timeFormat('%Y')
 
 export const NavigationHistogram = ({
   data,
@@ -53,7 +55,7 @@ export const NavigationHistogram = ({
   xValue,
   yValue,
   xAxisLabel = 'Date',
-  xAxisTickFormat = timeFormat('%Y'),
+  xAxisTickFormat = defaultFormatter,
   yAxisLabel = 'Value',
 }: DateHistogramProps) => {
   const brushRef = useRef(null)
@@ -111,7 +113,6 @@ export const NavigationHistogram = ({
     brush(select(brushRef.current))
     brush.on('brush end', function onBrush() {
       const selection = brushSelection(this)
-      if (!selection) return
       setBrushExtent(selection ? selection.map(xScale.invert) : null)
     })
   }, [setBrushExtent, xScale, innerWidth, innerHeight])
