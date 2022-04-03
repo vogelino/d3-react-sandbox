@@ -15,7 +15,7 @@ const App = () => {
   if (!data) return <>Loading...</>
 
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
       <BubbleMap data={data} width={width} height={Math.floor(height * 0.8)} />
       <NavigationHistogram
         data={data}
