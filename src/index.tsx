@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import './styles.css'
 import { HashRouter, Link, Route, Routes } from 'react-router-dom'
 import { MapWithHistogramBrush } from './components/MapWithHistogramBrush/MapWithHistogramBrush'
+import { VizLayout } from './VizLayout'
 
 const App = () => (
   <HashRouter>
@@ -23,8 +24,20 @@ const App = () => (
         }
       />
       <Route
+        path="horizontal-bar-chart"
+        element={
+          <VizLayout>
+            <div />
+          </VizLayout>
+        }
+      />
+      <Route
         path="world-map-with-histogram-brush"
-        element={<MapWithHistogramBrush />}
+        element={
+          <VizLayout>
+            <MapWithHistogramBrush />
+          </VizLayout>
+        }
       />
     </Routes>
   </HashRouter>

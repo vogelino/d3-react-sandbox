@@ -4,6 +4,26 @@
 
 body {
   background: #f1f3f5;
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
   margin: 0;
+}
+
+a,
+a:visited {
+  color: black;
+  text-decoration-color: lightgray;
+  text-underline-offset: 0.1rem;
+  transition: all 200ms ease-in-out;
+}
+
+a:hover {
+  color: var(--accentColor);
+}
+
+.viz-layout-backlink {
+  padding: 1rem 1.2rem;
+  display: block;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 20px;
 }
