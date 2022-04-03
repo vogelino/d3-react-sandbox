@@ -8,12 +8,15 @@ import { useMissingMigrantsData } from './hooks/useMissingMigrantsData'
 
 const xValue = ({ date }: { date: Date }) => date
 const yValue = ({ value }: { value: number }) => value
+const mapAspectRatio = 0.5389784946236559
+const histogramHeight = 240
 
 const App = () => {
   const data = useMissingMigrantsData()
   const windowSize = useWindowSize()
   const width = windowSize.width || 900
-  const height = windowSize.height || 600
+  const mapHeight = Math.round(width * mapAspectRatio)
+  const height = mapHeight + histogramHeight
   const [brushExtent, setBrushExtent] = useState<null | Date[]>(null)
 
   const filteredData = useMemo(() => {
@@ -27,7 +30,6 @@ const App = () => {
 
   if (!data) return <>Loading...</>
 
-  const mapHeight = Math.floor(height * 0.7)
   return (
     <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
       <BubbleMap
@@ -40,7 +42,7 @@ const App = () => {
         top={mapHeight}
         data={data}
         width={width}
-        height={height - mapHeight}
+        height={histogramHeight}
         setBrushExtent={setBrushExtent}
         xValue={xValue}
         yValue={yValue}

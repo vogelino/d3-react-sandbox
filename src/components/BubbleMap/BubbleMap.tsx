@@ -14,8 +14,8 @@ interface DataItem {
 }
 
 interface BubbleMapProps {
-  data: DataItem[]
-  filteredData: DataItem[]
+  data: null | DataItem[]
+  filteredData: null | DataItem[]
   width: number
   height: number
 }
@@ -23,7 +23,8 @@ interface BubbleMapProps {
 const sizeValue = (d: { value: number }) => d.value
 const maxRadius = 20
 
-type BubblesProps = Pick<BubbleMapProps, 'data'> & {
+interface BubblesProps {
+  data: DataItem[]
   projection: ReturnType<typeof useProjection>
   sizeScale: ScaleLinear<number, number, never>
 }
