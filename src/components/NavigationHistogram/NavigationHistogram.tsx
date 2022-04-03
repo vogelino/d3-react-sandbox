@@ -9,8 +9,9 @@ import {
   extent,
   timeMonths,
   timeFormat,
-  brushX,
   select,
+  brushX,
+  brushSelection,
 } from 'd3'
 import { bin, sum } from 'd3-array'
 import './NavigationHistogram.css'
@@ -108,9 +109,10 @@ export const NavigationHistogram = ({
       [innerWidth, innerHeight],
     ])
     brush(select(brushRef.current))
-    brush.on('brush end', (event) => {
-      if (!event || !event?.selection) return
-      setBrushExtent(event.selection && event.selection.map(xScale.invert))
+    brush.on('brush end', function onBrush() {
+      const selection = brushSelection(this)
+      if (!selection) return
+      setBrushExtent(selection ? selection.map(xScale.invert) : null)
     })
   }, [setBrushExtent, xScale, innerWidth, innerHeight])
 
