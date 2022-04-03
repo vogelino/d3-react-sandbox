@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import { BubbleMap } from './components/BubbleMap/BubbleMap'
 import { NavigationHistogram } from './components/NavigationHistogram/NavigationHistogram'
 import './styles.css'
-import { useData } from './hooks/useData'
 import { useWindowSize } from './hooks/useWindowSize'
+import { useMissingMigrantsData } from './hooks/useMissingMigrantsData'
 
 const App = () => {
-  const data = useData()
+  const data = useMissingMigrantsData()
   const windowSize = useWindowSize()
   const width = windowSize.width || 900
   const height = windowSize.height || 600

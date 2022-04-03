@@ -10,7 +10,7 @@ export type UseDataOutput = {
   interiors: ReturnType<typeof mesh>
 }
 
-export const useData = (): UseDataOutput | null => {
+export const useWorldMapLandMarksData = (): UseDataOutput | null => {
   const [data, setData] = useState<UseDataOutput | null>(null)
 
   useEffect(() => {

@@ -1,0 +1,19 @@
+.landmarks .land {
+  fill: #d8e1e2;
+}
+.landmarks .sphere {
+  fill: #ebf0f1;
+  stroke: #dbe1e2;
+}
+.landmarks .interiors {
+  fill: none;
+  stroke: #bfcdd1;
+}
+.landmarks .graticules {
+  fill: none;
+  stroke: #e0e7e9;
+}
+.bubble-map .data-circle {
+  fill: #218bc4;
+  opacity: 0.1;
+}

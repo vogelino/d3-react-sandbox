@@ -1,20 +1,17 @@
 import React from 'react'
 import { ExtendedFeatureCollection } from 'd3'
-import { UseDataOutput } from '../../hooks/useData'
+import { useWorldMapLandMarksData } from '../../hooks/useWorldMapLandMarksData'
 import { useProjection } from '../../hooks/useProjection'
 
 interface BubbleMapLandMarksProps {
-  data: UseDataOutput
-  width: number
-  height: number
+  data: ReturnType<typeof useWorldMapLandMarksData>
+  projection: ReturnType<typeof useProjection>
 }
 
-export const LandMarks = ({
-  data: { land, interiors },
-  width,
-  height,
-}: BubbleMapLandMarksProps) => {
-  const { path, graticule } = useProjection({ data: land, width, height })
+export const LandMarks = ({ data, projection }: BubbleMapLandMarksProps) => {
+  if (!data || !projection) return null
+  const { path, graticule } = projection
+  const { land, interiors } = data
   return (
     <g className="landmarks">
       <path className="sphere" d={path({ type: 'Sphere' }) || ''} />
