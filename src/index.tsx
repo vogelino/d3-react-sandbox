@@ -1,14 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BubbleMap } from './BubbleMap'
-import { NavigationHistogram } from './NavigationHistogram'
+import { BubbleMap } from './components/BubbleMap/BubbleMap'
+import { NavigationHistogram } from './components/NavigationHistogram/NavigationHistogram'
 import './styles.css'
-import { useData } from './useData'
-import { useWindowSize } from './useWindowSize'
+import { useData } from './hooks/useData'
+import { useWindowSize } from './hooks/useWindowSize'
 
 const App = () => {
   const data = useData()
-  const { width, height } = useWindowSize()
+  const windowSize = useWindowSize()
+  const width = windowSize.width || 900
+  const height = windowSize.height || 600
 
   if (!data) return <>Loading...</>
 
