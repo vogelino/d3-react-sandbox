@@ -12,7 +12,8 @@ export const MapWithHistogramBrush = () => {
   const data = useMissingMigrantsData()
   const windowSize = useWindowSize()
   const width = windowSize.width || 900
-  const mapHeight = Math.round(width * mapAspectRatio)
+  const mapHeightByRatio = Math.round(width * mapAspectRatio);
+  const mapHeight = Math.min((windowSize.height ? windowSize.height - 220 : mapHeightByRatio), mapHeightByRatio)
   const histogramHeight = Math.max(mapHeight / 5, 140)
   const height = mapHeight + histogramHeight
   const [brushExtent, setBrushExtent] = useState<null | Date[]>(null)

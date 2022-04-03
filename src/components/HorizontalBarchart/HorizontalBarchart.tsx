@@ -18,7 +18,7 @@ const margins = {
   top: 0,
   left: 60,
   right: 20,
-  bottom: 60,
+  bottom: 20,
 }
 const xValue = (d: DataItem) => d.value
 const yValue = (d: DataItem) => d.date
@@ -88,6 +88,7 @@ export const HorizontalBarchart = () => {
   return (
     <svg height={height} width={width} className="horizontal-barchart">
       <g transform={`translate(${margins.left},${margins.top})`}>
+        <line className="x-axis-line" x1={0} y1={0} x2={innerWidth} y2={0} /> 
         <AxisBottom
           innerHeight={innerHeight}
           innerWidth={innerWidth}
