@@ -1,18 +1,18 @@
 body {
   background: #f1f3f5;
 }
-.marks .land {
+.landmarks .land {
   fill: #c3cecf;
 }
-.marks .sphere {
+.landmarks .sphere {
   fill: #e9eff0;
   stroke: #dbe1e2;
 }
-.marks .interiors {
+.landmarks .interiors {
   fill: none;
   stroke: #899191;
 }
-.marks .graticules {
+.landmarks .graticules {
   fill: none;
   stroke: #dbe1e2;
 }

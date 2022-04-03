@@ -10,10 +10,10 @@ const App = () => {
   const data = useData()
   const { width, height } = useWindowSize()
 
-  if (!data) return 'Loading...'
+  if (!data) return <>Loading...</>
 
   return (
-    <svg width={width} height={height} viewport={`0 0 ${width} ${height}`}>
+    <svg width={width} height={height}>
       <BubbleMap data={data} width={width} height={Math.floor(height * 0.8)} />
       <NavigationHistogram
         data={data}
