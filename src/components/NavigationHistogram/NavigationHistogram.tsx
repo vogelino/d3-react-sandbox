@@ -17,7 +17,7 @@ import { bin, sum } from 'd3-array'
 import './NavigationHistogram.css'
 
 const margin = {
-  top: 40,
+  top: 10,
   right: 40,
   bottom: 60,
   left: 80,
@@ -124,26 +124,20 @@ export const NavigationHistogram = ({
         <AxisBottom
           xScale={xScale}
           innerHeight={innerHeight}
+          innerWidth={innerWidth}
           tickFormat={xAxisTickFormat}
           tickOffset={7}
+          label={xAxisLabel}
+          labelOffset={xAxisLabelOffset}
         />
-        <text
-          className="axis-label"
-          textAnchor="middle"
-          transform={` translate(${-yAxisLabelOffset},
-          ${innerHeight / 2}) rotate(-90)`}
-        >
-          {yAxisLabel}
-        </text>
-        <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={7} />
-        <text
-          className="axis-label"
-          x={innerWidth / 2}
-          y={innerHeight + xAxisLabelOffset}
-          textAnchor="middle"
-        >
-          {xAxisLabel}
-        </text>
+        <AxisLeft
+          label={yAxisLabel}
+          yScale={yScale}
+          innerWidth={innerWidth}
+          tickOffset={7}
+          innerHeight={innerHeight}
+          labelOffset={yAxisLabelOffset}
+        />
         {binnedData && (
           <Marks
             toolTipFormat={yValue}
