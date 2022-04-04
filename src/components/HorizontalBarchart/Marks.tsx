@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { SetStateAction, useCallback } from 'react'
 import { ScaleLinear } from 'd3'
 
-interface MarksProps {
-  data: { id: number; y: number; sum: number; height: number }[]
-  barGap: number
-  xScale: ScaleLinear<number, number, never>
+interface DataItem {
+  id: number
+  y: number
+  sum: number
+  height: number
 }
 
-export const Marks = ({ data, barGap, xScale }: MarksProps) => (
+interface MarksProps {
+  data: DataItem[]
+  barGap: number
+  xScale: ScaleLinear<number, number, never>
+  onMouseEnter?: (d: DataItem) => void
+  onMouseLeave?: (d: null) => void
+  hoveredElementId?: number | null
+}
+
+export const Marks = ({
+  data,
+  barGap,
+  xScale,
+  hoveredElementId,
+  onMouseEnter = () => undefined,
+  onMouseLeave = () => undefined,
+}: MarksProps) => (
   <>
     {data.map(({ id, y, sum, height }) => (
       <g key={id} transform={`translate(0,${y + barGap / 2})`}>
@@ -16,7 +33,11 @@ export const Marks = ({ data, barGap, xScale }: MarksProps) => (
           y={0}
           height={height - barGap}
           width={Math.max(2, xScale(sum))}
-          className="bar"
+          className={`bar ${
+            hoveredElementId && hoveredElementId !== id ? 'dimmed' : ''
+          }`}
+          onMouseEnter={() => onMouseEnter({ id, y, sum, height })}
+          onMouseLeave={() => onMouseLeave(null)}
         />
       </g>
     ))}

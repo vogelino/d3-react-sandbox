@@ -1,17 +1,26 @@
 import { extent, timeYears, sum, scaleTime, scaleLinear } from 'd3'
 import { bin } from 'd3-array'
-import React, { useMemo } from 'react'
+import React, { useState, useMemo, useRef, useCallback } from 'react'
 import { useMissingMigrantsData } from '../../hooks/useMissingMigrantsData'
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { AxisLeft } from './AxisLeft'
 import { AxisBottom } from './AxisBottom'
 import './HorizontalBarchart.css'
 import { Marks } from './Marks'
+import { Tooltip } from '../Tooltip/Tooltip'
+import { useDebounce, useThrottle } from 'rooks'
 
 interface DataItem {
   id: string
   value: number
   date: Date
+}
+
+interface BinnedDataItem {
+  id: number
+  y: number
+  sum: number
+  height: number
 }
 
 const margins = {
@@ -29,6 +38,11 @@ const yAxisOffset = xAxisOffset
 export const HorizontalBarchart = () => {
   const data = useMissingMigrantsData()
   const windowSize = useWindowSize()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [hoveredElement, setHoveredElement] = useState<null | BinnedDataItem>(
+    null,
+  )
   const width = windowSize.width || 900
   const height = Math.max(400, (windowSize.height || 500) - 100)
   const innerWidth = width - margins.left - margins.right
@@ -83,21 +97,55 @@ export const HorizontalBarchart = () => {
       .nice()
   }, [binnedData, innerWidth])
 
+  const onMouseEnter = useCallback(
+    (d: BinnedDataItem) => {
+      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
+      setHoveredElement(d)
+    },
+    [hoverTimerRef.current],
+  )
+
+  const onMouseLeave = useDebounce(() => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
+    hoverTimerRef.current = setTimeout(() => {
+      setHoveredElement(null)
+    }, 100)
+  })
+
   if (!binnedData || !yScale || !xScale) return <>Loading...</>
 
   return (
-    <svg height={height} width={width} className="horizontal-barchart">
-      <g transform={`translate(${margins.left},${margins.top})`}>
-        <line className="x-axis-line" x1={0} y1={0} x2={innerWidth} y2={0} /> 
-        <AxisBottom
-          innerHeight={innerHeight}
-          innerWidth={innerWidth}
-          xScale={xScale}
-          labelOffset={xAxisOffset}
-        />
-        <AxisLeft data={binnedData} offset={yAxisOffset} barGap={barGap} />
-        <Marks barGap={barGap} data={binnedData} xScale={xScale} />
-      </g>
-    </svg>
+    <div className="chart-container">
+      <svg height={height} width={width} className="horizontal-barchart">
+        <g transform={`translate(${margins.left},${margins.top})`}>
+          <line className="x-axis-line" x1={0} y1={0} x2={innerWidth} y2={0} />
+          <AxisBottom
+            innerHeight={innerHeight}
+            innerWidth={innerWidth}
+            xScale={xScale}
+            labelOffset={xAxisOffset}
+          />
+          <AxisLeft data={binnedData} offset={yAxisOffset} barGap={barGap} />
+          <Marks
+            barGap={barGap}
+            data={binnedData}
+            xScale={xScale}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            hoveredElementId={hoveredElement ? hoveredElement.id : null}
+          />
+        </g>
+      </svg>
+      {hoveredElement && (
+        <Tooltip
+          x={margins.left + xScale(hoveredElement.sum) / 2}
+          y={margins.top + hoveredElement.y + hoveredElement.height / 2}
+          container={containerRef.current}
+        >
+          <>{hoveredElement.sum}</>
+        </Tooltip>
+      )}
+      <div ref={containerRef} className="chart-tooltip-container" />
+    </div>
   )
 }

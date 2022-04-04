@@ -1,9 +1,14 @@
 .horizontal-barchart .tick {
-  fill: gray;
+  fill: var(--gray400);
 }
 
 .horizontal-barchart .bar {
   fill: var(--accentColor);
+  transition: fill 100ms ease-in-out;
+}
+
+.horizontal-barchart .bar.dimmed {
+  fill: var(--gray100);
 }
 
 .horizontal-barchart .tick-left {
@@ -15,10 +20,10 @@
 }
 
 .horizontal-barchart .x-axis-line {
-  stroke: gray;
+  stroke: var(--gray300);
   opacity: 0.6;
 }
 
 .horizontal-barchart .tick-line {
-  fill: lightgray;
+  fill: var(--gray200);
 }

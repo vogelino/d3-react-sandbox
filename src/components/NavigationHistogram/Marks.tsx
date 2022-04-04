@@ -1,5 +1,5 @@
 import { ScaleLinear, ScaleTime } from 'd3'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 interface DataItem {
   id: string
@@ -9,6 +9,7 @@ interface DataItem {
 }
 
 interface MarksProps {
+  brushExtent: [Date, Date] | null
   binnedData: DataItem[]
   xScale: ScaleTime<number, number, never>
   yScale: ScaleLinear<number, number, never>
@@ -21,22 +22,32 @@ export const Marks = ({
   yScale,
   xScale,
   toolTipFormat,
+  brushExtent,
   innerHeight,
-}: MarksProps) => (
-  <g className="marks">
-    {binnedData.map((d) => {
-      const y = yScale(d.y)
-      return (
-        <rect
-          key={d.id}
-          x={xScale(d.x0)}
-          y={y}
-          width={xScale(d.x1) - xScale(d.x0)}
-          height={innerHeight - y}
-        >
-          <title>{toolTipFormat(d.x0)}</title>
-        </rect>
-      )
-    })}
-  </g>
-)
+}: MarksProps) =>
+  useMemo(
+    () => (
+      <g className="marks">
+        {binnedData.map((d) => {
+          const y = yScale(d.y)
+          return (
+            <rect
+              key={d.id}
+              x={xScale(d.x0)}
+              y={y}
+              width={xScale(d.x1) - xScale(d.x0)}
+              height={innerHeight - y}
+              className={
+                brushExtent && (d.x0 < brushExtent[0] || d.x1 > brushExtent[1])
+                  ? 'mark dimmed'
+                  : 'mark'
+              }
+            >
+              <title>{toolTipFormat(d.x0)}</title>
+            </rect>
+          )
+        })}
+      </g>
+    ),
+    [innerHeight, xScale, yScale, brushExtent],
+  )

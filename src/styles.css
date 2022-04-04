@@ -1,9 +1,16 @@
 :root {
+  --white: #f1f3f5;
+  --gray50: #ebf0f1;
+  --gray100: #dbe1e2;
+  --gray200: #bfcdd1;
+  --gray300: #96a1a4;
+  --gray400: #5d676a;
   --accentColor: #c01850;
+  --accentColorLight: #e6cbd2;
 }
 
 body {
-  background: #f1f3f5;
+  background: var(--white);
   font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
   margin: 0;
@@ -12,7 +19,7 @@ body {
 a,
 a:visited {
   color: black;
-  text-decoration-color: lightgray;
+  text-decoration-color: var(--lightGray);
   text-underline-offset: 0.1rem;
   transition: all 200ms ease-in-out;
 }
@@ -24,6 +31,10 @@ a:hover {
 .viz-layout-backlink {
   padding: 1rem 1.2rem;
   display: block;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid var(--lightGray);
   margin-bottom: 20px;
+}
+
+.chart-container {
+  position: relative;
 }

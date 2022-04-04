@@ -1,7 +1,20 @@
 .navigation-histogram .marks {
   fill: var(--accentColor);
+  transition: fill 300ms ease-out;
+  will-change: fill;
+}
+.navigation-histogram .mark.dimmed {
+  fill: var(--gray200);
 }
 .navigation-histogram .tick {
   opacity: 0.6;
   font-size: 12px;
+  fill: var(--gray400);
+}
+.navigation-histogram .selection {
+  fill: var(--accentColor);
+  stroke: none;
+}
+.navigation-histogram .axis-label {
+  fill: var(--gray400);
 }

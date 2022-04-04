@@ -1,19 +1,24 @@
 .landmarks .land {
-  fill: #dce3e4;
+  fill: var(--gray100);
 }
+
 .landmarks .sphere {
-  fill: #ebf0f1;
-  stroke: #dbe1e2;
+  fill: var(--gray50);
+  stroke: var(--gray100);
 }
+
 .landmarks .interiors {
   fill: none;
-  stroke: #bfcdd1;
+  stroke: var(--gray200);
 }
+
 .landmarks .graticules {
   fill: none;
-  stroke: #e0e7e9;
+  stroke: var(--gray100);
 }
+
 .bubble-map .data-circle {
   fill: var(--accentColor);
   opacity: 0.1;
+  will-change: fill;
 }

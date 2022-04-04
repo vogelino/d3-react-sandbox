@@ -36,6 +36,7 @@ interface DateHistogramProps {
   top: number
   height: number
   width: number
+  brushExtent: [Date, Date] | null
   setBrushExtent: (extent: Date[] | null) => void
   xValue: (d: { date: Date }) => Date
   yValue: (d: { value: number }) => number
@@ -51,6 +52,7 @@ export const NavigationHistogram = ({
   top,
   height,
   width,
+  brushExtent,
   setBrushExtent,
   xValue,
   yValue,
@@ -146,6 +148,7 @@ export const NavigationHistogram = ({
             xScale={xScale}
             yScale={yScale}
             innerHeight={innerHeight}
+            brushExtent={brushExtent}
           />
         )}
         <g ref={brushRef} />
